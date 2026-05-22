@@ -1,5 +1,4 @@
-# IV1350-sem-4
-Sem3 IV1350
+# IV1350-AHGTR
 
 Group members:
 Anton
