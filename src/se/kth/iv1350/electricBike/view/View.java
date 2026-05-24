@@ -28,8 +28,8 @@ public class View {
         this.contr = contr;
         this.errorMsgHandler = new ErrorMessageHandler();
         this.logger = new LogHandler();
-        contr.addRepairOrderObserver(new RepairOrderView(logger));
-        contr.addRepairOrderObserver(new RepairOrderLogger(logger));
+        contr.addRepairOrderObserver(new RepairOrderView());
+        contr.addRepairOrderObserver(new RepairOrderLogger());
     }
 
     /**
