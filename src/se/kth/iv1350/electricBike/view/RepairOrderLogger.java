@@ -2,36 +2,39 @@ package se.kth.iv1350.electricBike.view;
 
 import java.io.IOException;
 import se.kth.iv1350.electricBike.integration.RepairOrderDTO;
-import se.kth.iv1350.electricBike.model.RepairOrderObserver;
 import se.kth.iv1350.electricBike.util.FileLogger;
+import se.kth.iv1350.electricBike.util.LogHandler;
 
 /**
  * An observer that writes updated repair orders to a log file, so
  * technicians and receptionists have a persistent record of changes.
- * The actual file handling is delegated to a {@link FileLogger}, which
- * keeps this class focused on the observer contract.
+ * The actual file handling is delegated to a {@link FileLogger}.
  */
-public class RepairOrderLogger implements RepairOrderObserver {
+public class RepairOrderLogger extends RepairOrderObserverTemplate {
     private static final String LOG_FILE_NAME = "repair-order-log.txt";
     private final FileLogger fileLogger;
+    private final LogHandler logger;
 
     /**
      * Creates a new instance and opens the log file for writing. An
      * existing log file with the same name is overwritten.
      *
+     * @param logger The log handler used to record errors that occur while
+     *               writing a repair order update to the log file.
      * @throws IOException if the log file cannot be opened.
      */
-    public RepairOrderLogger() throws IOException {
+    public RepairOrderLogger(LogHandler logger) throws IOException {
         this.fileLogger = new FileLogger(LOG_FILE_NAME);
+        this.logger = logger;
     }
 
-    /**
-     * Writes the specified repair order to the log file.
-     *
-     * @param order A snapshot of the repair order after the update.
-     */
     @Override
-    public void repairOrderUpdated(RepairOrderDTO order) {
+    protected void doHandleRepairOrderUpdate(RepairOrderDTO order) {
         fileLogger.log(order.toString());
+    }
+
+    @Override
+    protected void handleErrors(Exception e) {
+        logger.logException(e);
     }
 }
