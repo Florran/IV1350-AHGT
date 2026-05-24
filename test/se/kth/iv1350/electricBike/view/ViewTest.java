@@ -74,6 +74,14 @@ public class ViewTest {
     }
 
     @Test
+    public void testPrintsAppliedDiscount() {
+        view.fakeExecution();
+
+        assertTrue(captured.toString().contains("Applicerar rabatt (LoyaltyDiscount)"),
+                "View ska skriva ut vilken rabatt som tillämpas.");
+    }
+
+    @Test
     public void testPrintsFinalPriceAfterDiscount() {
         view.fakeExecution();
 
