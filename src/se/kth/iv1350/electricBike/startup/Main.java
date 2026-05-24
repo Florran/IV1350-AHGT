@@ -24,7 +24,11 @@ public class Main {
         Controller contr = new Controller(customerRegistry, printer);
         try {
             View view = new View(contr);
-            view.fakeExecution();
+            try {
+                view.fakeExecution();
+            } finally {
+                view.close();
+            }
         } catch (IOException ioe) {
             System.out.println("Could not start application, log file is unavailable.");
             ioe.printStackTrace();

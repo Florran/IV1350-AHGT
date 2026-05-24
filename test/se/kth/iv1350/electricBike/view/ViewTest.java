@@ -40,7 +40,10 @@ public class ViewTest {
     public void tearDown() {
         System.setOut(originalOut);
         RepairOrderRegistry.getInstance().clearAll();
-        view = null;
+        if (view != null) {
+            view.close();
+            view = null;
+        }
     }
 
     @Test

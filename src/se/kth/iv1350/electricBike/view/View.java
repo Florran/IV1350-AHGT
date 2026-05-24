@@ -92,4 +92,14 @@ public class View {
             logger.logException(exc);
         }
     }
+
+    /**
+     * Releases the log file used for caught exceptions. Must be called when
+     * the view is no longer needed, otherwise the log file stays open until
+     * garbage collection, which on Windows prevents the file from being
+     * deleted.
+     */
+    public void close() {
+        logger.close();
+    }
 }
